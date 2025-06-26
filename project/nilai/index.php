@@ -1,5 +1,6 @@
 <?php
 include '../config/db.php';
+<<<<<<< HEAD
 $result = $koneksi->query("SELECT 
     n.id AS nilai_id,
     m.nama,
@@ -42,19 +43,30 @@ if ($row_min) {
     $nilai_terendah = '-';
 }
 
+=======
+$result = $conn->query("SELECT n.*, m.nama FROM nilai n JOIN mahasiswa m ON n.mahasiswa_id = m.id");
+>>>>>>> 1557d6bfc8344706aaadee8f186a70f8ea4cb864
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
+<<<<<<< HEAD
     <title>Data Nilai</title>
+=======
+    <title>Data Nilai Mahasiswa</title>
+>>>>>>> 1557d6bfc8344706aaadee8f186a70f8ea4cb864
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="p-4">
     <div class="container">
+<<<<<<< HEAD
         <h2 class="mb-4">Data Nilai Mahasiswa Mata Kuliah Basis Data Lanjut</h2>
+=======
+        <h2 class="mb-4">Data Nilai Mahasiswa</h2>
+>>>>>>> 1557d6bfc8344706aaadee8f186a70f8ea4cb864
         <a href="tambah.php" class="btn btn-primary mb-3">Tambah Nilai</a>
         <table class="table table-bordered">
             <thead class="table-light">
@@ -72,14 +84,20 @@ if ($row_min) {
                         <td><?= $row['matkul'] ?></td>
                         <td><?= $row['nilai'] ?></td>
                         <td>
+<<<<<<< HEAD
                             <a href='edit.php?id=<?= $row['nilai_id'] ?>' class="btn btn-sm btn-warning">Edit</a>
                             <a href="hapus.php?id=<?= $row['nilai_id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin hapus nilai ini?')">Hapus</a>
 
+=======
+                            <a href='edit.php?id=<?= $row['id'] ?>' class="btn btn-sm btn-warning">Edit</a>
+                            <a href='hapus.php?id=<?= $row['id'] ?>' class="btn btn-sm btn-danger" onclick="return confirm('Hapus?')">Hapus</a>
+>>>>>>> 1557d6bfc8344706aaadee8f186a70f8ea4cb864
                         </td>
                     </tr>
                 <?php endwhile; ?>
             </tbody>
         </table>
+<<<<<<< HEAD
         <div class="mt-4">
             <h5>Statistik Nilai Mahasiswa</h5>
             <table class="table table-bordered">
@@ -98,4 +116,10 @@ if ($row_min) {
         <a href="../index.php" class="btn btn-primary mb-3">Back</a>
     </div>
 </body>
+=======
+        <a href="../index.php" class="btn btn-primary mb-3">Back</a>
+    </div>
+</body>
+
+>>>>>>> 1557d6bfc8344706aaadee8f186a70f8ea4cb864
 </html>

@@ -2,13 +2,22 @@
 <?php
 include '../config/db.php';
 $id = $_GET['id'];
+<<<<<<< HEAD
 $data = $koneksi->query("SELECT * FROM nilai WHERE id=$id")->fetch_assoc();
 $mahasiswa = $koneksi->query("SELECT * FROM mahasiswa");
+=======
+$data = $conn->query("SELECT * FROM nilai WHERE id=$id")->fetch_assoc();
+$mahasiswa = $conn->query("SELECT * FROM mahasiswa");
+>>>>>>> 1557d6bfc8344706aaadee8f186a70f8ea4cb864
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $mhs = $_POST['mahasiswa_id'];
     $matkul = $_POST['matkul'];
     $nilai = $_POST['nilai'];
+<<<<<<< HEAD
     $koneksi->query("UPDATE nilai SET mahasiswa_id=$mhs, matkul='$matkul', nilai=$nilai WHERE id=$id");
+=======
+    $conn->query("UPDATE nilai SET mahasiswa_id=$mhs, matkul='$matkul', nilai=$nilai WHERE id=$id");
+>>>>>>> 1557d6bfc8344706aaadee8f186a70f8ea4cb864
     header("Location: index.php");
 }
 ?>
@@ -44,4 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </form>
 </div>
 </body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> 1557d6bfc8344706aaadee8f186a70f8ea4cb864
