@@ -42,8 +42,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </form>
 </div>
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> 1557d6bfc8344706aaadee8f186a70f8ea4cb864
