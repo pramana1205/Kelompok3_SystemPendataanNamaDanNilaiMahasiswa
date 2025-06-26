@@ -4,7 +4,6 @@ $result = $koneksi->query("SELECT * FROM mahasiswa");
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Data Mahasiswa</title>
@@ -40,5 +39,4 @@ $result = $koneksi->query("SELECT * FROM mahasiswa");
         <a href="../index.php" class="btn btn-primary mb-3">Back</a>
     </div>
 </body>
-
 </html>

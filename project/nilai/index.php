@@ -98,5 +98,4 @@ if ($row_min) {
         <a href="../index.php" class="btn btn-primary mb-3">Back</a>
     </div>
 </body>
-
 </html>
