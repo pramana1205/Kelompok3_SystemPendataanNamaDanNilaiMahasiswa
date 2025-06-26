@@ -5,11 +5,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nama = $_POST['nama'];
     $nim = $_POST['nim'];
     $sql = "INSERT INTO mahasiswa (nama, nim) VALUES ('$nama', '$nim')";
-<<<<<<< HEAD
     $koneksi->query($sql);
-=======
     $conn->query($sql);
->>>>>>> 1557d6bfc8344706aaadee8f186a70f8ea4cb864
     header("Location: index.php");
 }
 ?>
@@ -36,8 +33,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </form>
 </div>
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> 1557d6bfc8344706aaadee8f186a70f8ea4cb864

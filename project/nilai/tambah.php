@@ -1,20 +1,16 @@
 
 <?php
 include '../config/db.php';
-<<<<<<< HEAD
+
 $mahasiswa = $koneksi->query("SELECT * FROM mahasiswa");
-=======
+
 $mahasiswa = $conn->query("SELECT * FROM mahasiswa");
->>>>>>> 1557d6bfc8344706aaadee8f186a70f8ea4cb864
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $mhs = $_POST['mahasiswa_id'];
     $matkul = $_POST['matkul'];
     $nilai = $_POST['nilai'];
-<<<<<<< HEAD
     $koneksi->query("INSERT INTO nilai (mahasiswa_id, matkul, nilai) VALUES ($mhs, '$matkul', $nilai)");
-=======
     $conn->query("INSERT INTO nilai (mahasiswa_id, matkul, nilai) VALUES ($mhs, '$matkul', $nilai)");
->>>>>>> 1557d6bfc8344706aaadee8f186a70f8ea4cb864
     header("Location: index.php");
 }
 ?>
@@ -48,8 +44,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </form>
 </div>
 </body>
-<<<<<<< HEAD
 </html>
-=======
 </html>
->>>>>>> 1557d6bfc8344706aaadee8f186a70f8ea4cb864

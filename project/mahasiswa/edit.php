@@ -2,20 +2,12 @@
 <?php
 include '../config/db.php';
 $id = $_GET['id'];
-<<<<<<< HEAD
-$data = $koneksi->query("SELECT * FROM mahasiswa WHERE id=$id")->fetch_assoc();
-=======
 $data = $conn->query("SELECT * FROM mahasiswa WHERE id=$id")->fetch_assoc();
->>>>>>> 1557d6bfc8344706aaadee8f186a70f8ea4cb864
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nama = $_POST['nama'];
     $nim = $_POST['nim'];
     $sql = "UPDATE mahasiswa SET nama='$nama', nim='$nim' WHERE id=$id";
-<<<<<<< HEAD
-    $koneksi->query($sql);
-=======
     $conn->query($sql);
->>>>>>> 1557d6bfc8344706aaadee8f186a70f8ea4cb864
     header("Location: index.php");
 }
 ?>

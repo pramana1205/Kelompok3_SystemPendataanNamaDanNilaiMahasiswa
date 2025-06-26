@@ -1,17 +1,13 @@
 <?php
 include '../config/db.php';
-<<<<<<< HEAD
 $result = $koneksi->query("SELECT * FROM mahasiswa");
 ?>
 <!DOCTYPE html>
 <html lang="en">
-=======
 $result = $conn->query("SELECT * FROM mahasiswa");
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
->>>>>>> 1557d6bfc8344706aaadee8f186a70f8ea4cb864
 <head>
     <meta charset="UTF-8">
     <title>Data Mahasiswa</title>
@@ -36,14 +32,8 @@ $result = $conn->query("SELECT * FROM mahasiswa");
                         <td><?= $row['nama'] ?></td>
                         <td><?= $row['nim'] ?></td>
                         <td>
-<<<<<<< HEAD
-                            <a href='edit.php?id=<?= $row['id_mhs'] ?>' class="btn btn-sm btn-warning">Edit</a>
-                            <a href='hapus.php?id=<?= $row['id_mhs'] ?>' class="btn btn-sm btn-danger"
-                                onclick="return confirm('Hapus?')">Hapus</a>
-=======
                             <a href='edit.php?id=<?= $row['id'] ?>' class="btn btn-sm btn-warning">Edit</a>
                             <a href='hapus.php?id=<?= $row['id'] ?>' class="btn btn-sm btn-danger" onclick="return confirm('Hapus?')">Hapus</a>
->>>>>>> 1557d6bfc8344706aaadee8f186a70f8ea4cb864
                         </td>
                     </tr>
                 <?php endwhile; ?>
@@ -52,8 +42,4 @@ $result = $conn->query("SELECT * FROM mahasiswa");
         <a href="../index.php" class="btn btn-primary mb-3">Back</a>
     </div>
 </body>
-<<<<<<< HEAD
-=======
-
->>>>>>> 1557d6bfc8344706aaadee8f186a70f8ea4cb864
 </html>
