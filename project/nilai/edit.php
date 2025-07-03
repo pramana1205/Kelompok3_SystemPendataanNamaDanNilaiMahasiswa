@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $mhs = $koneksi->real_escape_string($_POST['mahasiswa_id']);
     $matkul = $koneksi->real_escape_string($_POST['matkul']);
     $nilai = $koneksi->real_escape_string($_POST['nilai']);
-
+    
     $koneksi->query("UPDATE nilai SET mahasiswa_id=$mhs, matkul='$matkul', nilai=$nilai WHERE id=$id");
     header("Location: index.php");
     exit();
@@ -16,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,12 +28,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             --secondary-color: #1cc88a;
             --dark-color: #5a5c69;
         }
-
+        
         body {
             background-color: #f8f9fc;
             font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         }
-
+        
         .form-card {
             max-width: 600px;
             margin: 2rem auto;
@@ -42,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             border-radius: 15px;
             box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
         }
-
+        
         .card-header {
             background-color: var(--primary-color);
             color: white;
@@ -50,26 +49,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             padding: 1.25rem 1.5rem;
             border-bottom: none;
         }
-
+        
         .form-label {
             font-weight: 600;
             color: var(--dark-color);
             margin-bottom: 0.5rem;
         }
-
-        .form-control,
-        .form-select {
+        
+        .form-control, .form-select {
             padding: 0.75rem 1rem;
             border-radius: 10px;
             border: 1px solid #d1d3e2;
         }
-
-        .form-control:focus,
-        .form-select:focus {
+        
+        .form-control:focus, .form-select:focus {
             border-color: var(--primary-color);
             box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
         }
-
+        
         .btn-update {
             background-color: var(--primary-color);
             border-color: var(--primary-color);
@@ -79,40 +76,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             letter-spacing: 0.5px;
             transition: all 0.3s;
         }
-
+        
         .btn-update:hover {
             background-color: #3a5bc7;
             border-color: #3a5bc7;
             transform: translateY(-2px);
         }
-
+        
         .btn-back {
             border-radius: 50px;
             padding: 0.5rem 1.5rem;
             margin-right: 1rem;
         }
-
+        
         .input-group-text {
             background-color: #e9ecef;
             border-radius: 10px 0 0 10px;
         }
-
+        
         .student-option {
             display: flex;
             justify-content: space-between;
         }
-
+        
         .student-name {
             font-weight: 600;
         }
-
+        
         .student-nim {
             color: #6c757d;
             font-size: 0.9em;
         }
     </style>
 </head>
-
 <body>
     <div class="container py-5">
         <div class="form-card card">
@@ -124,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="mb-4">
                         <label for="mahasiswa" class="form-label">Mahasiswa</label>
                         <select name="mahasiswa_id" id="mahasiswa" class="form-select" required>
-                            <?php while ($row = $mahasiswa->fetch_assoc()): ?>
+                            <?php while($row = $mahasiswa->fetch_assoc()): ?>
                                 <option value="<?= $row['id'] ?>" <?= $row['id'] == $data['mahasiswa_id'] ? 'selected' : '' ?>>
                                     <span class="student-name"><?= htmlspecialchars($row['nama']) ?></span>
                                     <span class="student-nim">(<?= htmlspecialchars($row['nim']) ?>)</span>
@@ -132,25 +128,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <?php endwhile; ?>
                         </select>
                     </div>
-
+                    
                     <div class="mb-4">
                         <label for="matkul" class="form-label">Mata Kuliah</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-book"></i></span>
-                            <input type="text" id="matkul" name="matkul" class="form-control"
-                                value="<?= htmlspecialchars($data['matkul']) ?>" required>
+                            <input type="text" id="matkul" name="matkul" class="form-control" 
+                                   value="<?= htmlspecialchars($data['matkul']) ?>" required>
                         </div>
                     </div>
-
+                    
                     <div class="mb-4">
                         <label for="nilai" class="form-label">Nilai</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-star"></i></span>
-                            <input type="number" id="nilai" name="nilai" step="0.01" min="0" max="100"
-                                class="form-control" value="<?= htmlspecialchars($data['nilai']) ?>" required>
+                            <input type="number" id="nilai" name="nilai" step="0.01" min="0" max="100" 
+                                   class="form-control" value="<?= htmlspecialchars($data['nilai']) ?>" required>
                         </div>
                     </div>
-
+                    
                     <div class="d-flex justify-content-between align-items-center mt-5">
                         <a href="index.php" class="btn btn-outline-secondary btn-back">
                             <i class="fas fa-arrow-left me-2"></i>Kembali
@@ -166,5 +162,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

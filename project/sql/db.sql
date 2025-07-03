@@ -1,3 +1,4 @@
+
 CREATE DATABASE IF NOT EXISTS uas_mahasiswa;
 
 USE uas_mahasiswa;
