@@ -83,7 +83,7 @@ $stmt_avg->close();
                         <?= !is_null($nilai_tertinggi['nilai']) ? number_format($nilai_tertinggi['nilai'], 0) : 'N/A' ?>
                     </div>
                     <div class="stat-sub-value">
-                        <?= !is_null($nilai_tertinggi['matkul`']) ? htmlspecialchars($nilai_tertinggi['matkul']) : 'Belum ada data' ?>
+                        <?= !is_null($nilai_tertinggi['matkul']) ? htmlspecialchars($nilai_tertinggi['matkul']) : 'Belum ada data' ?>
                     </div>
                 </div>
             </div>
