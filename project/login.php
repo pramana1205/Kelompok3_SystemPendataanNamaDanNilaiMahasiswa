@@ -1,17 +1,42 @@
 <?php
 session_start();
+include('config/db.php');
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $user = $_POST['username'];
-    $pass = $_POST['password'];
+    $role = $_POST['role'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-    if ($user === 'admin' && $pass === 'admin') {
-        $_SESSION['admin'] = true;
-        header('Location: index.php');
-        exit;
+    if ($role === 'admin') {
+        if ($username === 'admin' && $password === 'admin') {
+            $_SESSION['role'] = 'admin';
+            $_SESSION['username'] = 'admin';
+            header('Location: index.php');
+            exit;
+        } else {
+            $error = '❌ Username / Password salah!';
+        }
+    } elseif ($role === 'mahasiswa') {
+        // Menggunakan prepared statements untuk keamanan
+        $stmt = $koneksi->prepare("SELECT nim, nama FROM mahasiswa WHERE nim = ? AND nama = ?");
+        $stmt->bind_param("ss", $username, $password);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 1) {
+            $user = $result->fetch_assoc();
+            $_SESSION['role'] = 'mahasiswa';
+            $_SESSION['username'] = $user['nama'];
+            $_SESSION['nim'] = $user['nim']; // <-- BARIS PENTING DITAMBAHKAN
+            header('Location: mahasiswa_dashboard.php');
+            exit;
+        } else {
+            $error = '❌ NIM / Nama salah!';
+        }
+        $stmt->close();
     } else {
-        $error = '❌ Username / Password salah!';
+        $error = '❌ Peran tidak valid!';
     }
 }
 ?>
@@ -21,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <head>
     <meta charset="UTF-8">
-    <title>Login Admin</title>
+    <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
@@ -36,17 +61,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </label>
     </div>
     <form method="post" class="login-box">
-        <h4 class="text-center mb-4">🔐 Login Admin</h4>
+        <h4 class="text-center mb-4">🔐 Login</h4>
         <?php if ($error): ?>
             <div class="alert alert-danger"><?= $error ?></div>
         <?php endif; ?>
         <div class="mb-3">
-            <label for="username" class="form-label">👤 Username</label>
+            <label for="username" class="form-label">👤 Username/NIM</label>
             <input type="text" name="username" id="username" class="form-control" required autofocus>
         </div>
         <div class="mb-3">
-            <label for="password" class="form-label">🔑 Password</label>
+            <label for="password" class="form-label">🔑 Password/Nama</label>
             <input type="password" name="password" id="password" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="role" class="form-label">👥 Login sebagai</label>
+            <select name="role" id="role" class="form-select">
+                <option value="admin">Admin</option>
+                <option value="mahasiswa">Mahasiswa</option>
+            </select>
         </div>
         <button type="submit" class="btn btn-primary w-100">Login</button>
     </form>

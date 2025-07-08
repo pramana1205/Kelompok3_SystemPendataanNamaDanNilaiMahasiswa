@@ -1,4 +1,12 @@
 <?php
+session_start();
+
+// Protect this page - only for admins
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    header('Location: login.php');
+    exit;
+}
+
 include('config/db.php');
 
 $query = mysqli_query($koneksi, "SELECT jumlah_mahasiswa() AS total");
@@ -34,7 +42,7 @@ $rata_nilai = mysqli_fetch_assoc($query_avg);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Pendataan Mahasiswa</title>
+    <title>Dashboard Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/index.css">
@@ -43,20 +51,23 @@ $rata_nilai = mysqli_fetch_assoc($query_avg);
 <body>
     <div class="container py-5">
         <div class="dashboard-header text-center">
-            <h1 class="display-4 fw-bold mb-3"><i class="fas fa-user-graduate me-2"></i>Dashboard Pendataan Mahasiswa</h1>
+            <h1 class="display-4 fw-bold mb-3"><i class="fas fa-user-shield me-2"></i>Dashboard Admin</h1>
+            <p class="text-muted">Selamat datang, <?= htmlspecialchars($_SESSION['username']) ?>!</p>
             <div class="d-flex justify-content-center flex-wrap">
-                <a href="mahasiswa/index.php" class="btn btn-light btn-dashboard">
+                <a href="mahasiswa/index.php" class="btn btn-primary btn-dashboard">
                     <i class="fas fa-users me-2"></i>Data Mahasiswa
                 </a>
-                <a href="nilai/index.php" class="btn btn-light btn-dashboard">
+                <a href="nilai/index.php" class="btn btn-info btn-dashboard">
                     <i class="fas fa-chart-bar me-2"></i>Data Nilai Mahasiswa
+                </a>
+                <a href="logout.php" class="btn btn-danger btn-dashboard">
+                    <i class="fas fa-sign-out-alt me-2"></i>Logout
                 </a>
             </div>
         </div>
         <h2 class="mb-4 text-center"><i class="fas fa-chart-pie me-2"></i>Statistik Nilai Mahasiswa</h2>
 
         <div class="row justify-content-center">
-            <!-- Jumlah Mahasiswa -->
             <div class="col-md-4">
                 <div class="stat-card">
                     <div class="stat-icon">
@@ -67,7 +78,6 @@ $rata_nilai = mysqli_fetch_assoc($query_avg);
                 </div>
             </div>
 
-            <!-- Nilai Tertinggi -->
             <div class="col-md-4">
                 <div class="stat-card highlight">
                     <div class="stat-icon">
@@ -80,7 +90,6 @@ $rata_nilai = mysqli_fetch_assoc($query_avg);
                 </div>
             </div>
 
-            <!-- Nilai Terendah -->
             <div class="col-md-4">
                 <div class="stat-card">
                     <div class="stat-icon">
