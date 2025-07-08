@@ -4,7 +4,6 @@ include '../config/db.php';
 $id = $_GET['id'];
 $koneksi->query("DELETE FROM nilai WHERE id = $id");
 
-// Setelah penghapusan, reset auto increment
 $result = $koneksi->query("SELECT MAX(id) as max_id FROM nilai");
 $row = $result->fetch_assoc();
 $next_id = $row['max_id'] + 1;

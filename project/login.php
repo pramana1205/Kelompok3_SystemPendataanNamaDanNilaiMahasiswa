@@ -18,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = '❌ Username / Password salah!';
         }
     } elseif ($role === 'mahasiswa') {
-        // Menggunakan prepared statements untuk keamanan
         $stmt = $koneksi->prepare("SELECT nim, nama FROM mahasiswa WHERE nim = ? AND nama = ?");
         $stmt->bind_param("ss", $username, $password);
         $stmt->execute();

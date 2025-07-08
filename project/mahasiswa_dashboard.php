@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Lindungi halaman ini - hanya untuk pengguna yang sudah login
 if (!isset($_SESSION['role']) || !isset($_SESSION['nim'])) {
     header('Location: login.php');
     exit;
@@ -10,7 +9,6 @@ if (!isset($_SESSION['role']) || !isset($_SESSION['nim'])) {
 include('config/db.php');
 $nim_mahasiswa = $_SESSION['nim'];
 
-// 1. Query untuk nilai tertinggi + mata kuliahnya
 $stmt_max = $koneksi->prepare("
     SELECT nilai, matkul FROM view_nilai_mahasiswa 
     WHERE nim = ? 
@@ -23,7 +21,6 @@ $result_max = $stmt_max->get_result();
 $nilai_tertinggi = $result_max->num_rows > 0 ? $result_max->fetch_assoc() : ['nilai' => null, 'mata_kuliah' => null];
 $stmt_max->close();
 
-// 2. Query untuk nilai terendah + mata kuliahnya
 $stmt_min = $koneksi->prepare("
     SELECT nilai, matkul FROM view_nilai_mahasiswa 
     WHERE nim = ? 
@@ -36,7 +33,6 @@ $result_min = $stmt_min->get_result();
 $nilai_terendah = $result_min->num_rows > 0 ? $result_min->fetch_assoc() : ['nilai' => null, 'matkul' => null];
 $stmt_min->close();
 
-// 3. Query untuk rata-rata nilai
 $stmt_avg = $koneksi->prepare("SELECT AVG(nilai) AS rata_nilai FROM view_nilai_mahasiswa WHERE nim = ?");
 $stmt_avg->bind_param("s", $nim_mahasiswa);
 $stmt_avg->execute();
@@ -57,7 +53,6 @@ $stmt_avg->close();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/index.css">
     <style>
-        /* Gaya tambahan untuk nama mata kuliah */
         .stat-sub-value {
             font-size: 1rem;
             color: #6c757d;

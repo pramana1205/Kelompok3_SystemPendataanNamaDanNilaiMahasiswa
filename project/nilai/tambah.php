@@ -1,7 +1,6 @@
 <?php
 include '../config/db.php';
 
-// Tambahkan query untuk mengambil data mahasiswa
 $mahasiswa = $koneksi->query("SELECT * FROM mahasiswa");
 
 function getNextAvailableId($koneksi)
