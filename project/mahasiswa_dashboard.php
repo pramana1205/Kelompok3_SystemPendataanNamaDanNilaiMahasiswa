@@ -65,7 +65,7 @@ $stmt_avg->close();
 <body>
     <div class="container py-5">
         <div class="dashboard-header text-center mb-5">
-            <h1 class="display-4 fw-bold mb-2"><i class="fas fa-user-graduate me-2"></i>Dasbor Nilai</h1>
+            <h1 class="display-4 fw-bold mb-2"><i class="fas fa-user-graduate me-2"></i>Dasboard Nilai</h1>
             <p class="h5 text-muted">Selamat datang, <?= htmlspecialchars($_SESSION['username']) ?>!</p>
             <a href="logout.php" class="btn btn-danger mt-3">
                 <i class="fas fa-sign-out-alt me-2"></i>Logout
