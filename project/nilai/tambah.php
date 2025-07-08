@@ -1,13 +1,40 @@
 <?php
 include '../config/db.php';
+
+// Tambahkan query untuk mengambil data mahasiswa
 $mahasiswa = $koneksi->query("SELECT * FROM mahasiswa");
+
+function getNextAvailableId($koneksi)
+{
+    $result = $koneksi->query("SELECT t1.id + 1 as available_id
+                          FROM nilai t1
+                          WHERE NOT EXISTS (
+                              SELECT * FROM nilai t2 
+                              WHERE t2.id = t1.id + 1
+                          )
+                          ORDER BY t1.id
+                          LIMIT 1");
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['available_id'];
+    } else {
+        $result = $koneksi->query("SELECT MAX(id) as max_id FROM nilai");
+        $row = $result->fetch_assoc();
+        return $row['max_id'] ? $row['max_id'] + 1 : 1;
+    }
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $mhs = $koneksi->real_escape_string($_POST['mahasiswa_id']);
     $matkul = $koneksi->real_escape_string($_POST['matkul']);
     $nilai = $koneksi->real_escape_string($_POST['nilai']);
 
-    $koneksi->query("INSERT INTO nilai (mahasiswa_id, matkul, nilai) VALUES ($mhs, '$matkul', $nilai)");
+    $next_id = getNextAvailableId($koneksi);
+
+    $koneksi->query("INSERT INTO nilai (id, mahasiswa_id, matkul, nilai) 
+                    VALUES ($next_id, $mhs, '$matkul', $nilai)");
+
     header("Location: index.php");
     exit();
 }
@@ -122,12 +149,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="mb-4">
                         <label for="mahasiswa" class="form-label">Mahasiswa</label>
                         <select name="mahasiswa_id" id="mahasiswa" class="form-select" required>
-                            <?php while ($row = $mahasiswa->fetch_assoc()): ?>
-                                <option value="<?= $row['id'] ?>">
-                                    <span class="student-name"><?= htmlspecialchars($row['nama']) ?></span>
-                                    <span class="student-nim">(<?= htmlspecialchars($row['nim']) ?>)</span>
-                                </option>
-                            <?php endwhile; ?>
+                            <?php
+                            // Pastikan query mahasiswa sudah dijalankan sebelum ini
+                            if ($mahasiswa->num_rows > 0) {
+                                while ($row = $mahasiswa->fetch_assoc()): ?>
+                                    <option value="<?= $row['id'] ?>">
+                                        <span class="student-name"><?= htmlspecialchars($row['nama']) ?></span>
+                                        <span class="student-nim">(<?= htmlspecialchars($row['nim']) ?>)</span>
+                                    </option>
+                            <?php endwhile;
+                            } else {
+                                echo '<option value="">Tidak ada mahasiswa tersedia</option>';
+                            }
+                            ?>
                         </select>
                     </div>
 

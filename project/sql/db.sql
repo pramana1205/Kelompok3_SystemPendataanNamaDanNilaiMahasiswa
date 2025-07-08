@@ -38,3 +38,5 @@ FROM
   mahasiswa;
 RETURN total;
 END // DELIMITER;
+
+ALTER TABLE nilai ADD INDEX idx_matkul (matkul);

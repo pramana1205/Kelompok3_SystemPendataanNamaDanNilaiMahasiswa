@@ -1,16 +1,32 @@
 <?php
 include '../config/db.php';
-$result = $koneksi->query("SELECT 
+
+$koneksi->query("ALTER TABLE nilai ADD INDEX IF NOT EXISTS idx_matkul (matkul)");
+
+$pencarian = '';
+if (isset($_GET['cari'])) {
+    $pencarian = $koneksi->real_escape_string($_GET['cari']);
+}
+
+$query = "SELECT 
     n.id AS nilai_id,
     m.nama,
     m.nim,
     n.matkul,
     n.nilai
 FROM 
-    nilai n
+    nilai n FORCE INDEX (idx_matkul)
 JOIN 
-    mahasiswa m ON n.mahasiswa_id = m.id");
+    mahasiswa m ON n.mahasiswa_id = m.id";
+
+if (!empty($pencarian)) {
+    $query .= " WHERE n.matkul LIKE '%$pencarian%'";
+}
+
+$query .= " ORDER BY n.matkul, m.nama";
+$result = $koneksi->query($query);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,6 +75,11 @@ JOIN
         .btn-primary:hover {
             background-color: #3a5bc7;
             border-color: #3a5bc7;
+        }
+
+        .search-box {
+            max-width: 500px;
+            margin: 0 auto 20px;
         }
 
         .table {
@@ -175,19 +196,35 @@ JOIN
     <div class="container py-5">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h4 class="m-0"><i class="fas fa-chart-bar me-2"></i>Data Nilai Mahasiswa - Basis Data Lanjut</h4>
+                <h4 class="m-0"><i class="fas fa-chart-bar me-2"></i>Data Nilai Mahasiswa</h4>
                 <div>
                     <a href='tambah.php' class="btn btn-light">
                         <i class="fas fa-plus me-2"></i>Tambah Nilai
                     </a>
                 </div>
             </div>
-            <div class="card-body p-0">
+            <div class="card-body">
+                <form method="get" class="mb-4">
+                    <div class="input-group search-box">
+                        <input type="text" name="cari" class="form-control"
+                            placeholder="Cari berdasarkan mata kuliah..." value="<?= htmlspecialchars($pencarian) ?>">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search me-2"></i>Cari
+                        </button>
+                        <?php if (!empty($pencarian)): ?>
+                            <a href="index.php" class="btn btn-outline-secondary">
+                                <i class="fas fa-times me-2"></i>Reset
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                </form>
+
                 <div class="table-responsive">
                     <table class="table table-hover mb-0">
                         <thead class="table-light">
                             <tr>
                                 <th>Nama Mahasiswa</th>
+                                <th>NIM</th>
                                 <th>Mata Kuliah</th>
                                 <th>Nilai</th>
                                 <th class="text-center">Aksi</th>
@@ -204,6 +241,9 @@ JOIN
                                 <tr>
                                     <td>
                                         <span class="student-name"><?= htmlspecialchars($row['nama']) ?></span>
+                                    </td>
+                                    <td>
+                                        <?= htmlspecialchars($row['nim']) ?>
                                     </td>
                                     <td>
                                         <span class="course-name"><?= htmlspecialchars($row['matkul']) ?></span>
